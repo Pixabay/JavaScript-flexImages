@@ -11,7 +11,7 @@ We have implemented this plugin in production and we share this piece of softwar
 
 ## Demo and Documentation
 
-http://goodies.pixabay.com/JavaScript/flex-images/demo.html
+http://goodies.pixabay.com/javascript/flex-images/demo.html
 
 ## Features
 
