@@ -1,0 +1,36 @@
+{
+    "name": "javascript-flex-images",
+	"description": "A lightweight vanilla JavaScript plugin for creating fluid galleries as seen on Flickr and Google Images.",
+    "version": "1.0.0",
+    "main" : [
+    	"flex-images.min.js",
+    	"flex-images.css"
+    ],
+    "homepage": "https://github.com/Pixabay/JavaScript-flexImages",
+    "authors": [{
+        "name": "Simon Steinberger",
+        "url": "http://pixabay.com/users/Simon/",
+        "email": "simon@pixabay.com"
+    }],
+    "keywords": [
+        "images",
+        "pictures",
+        "photos",
+        "videos",
+        "responsive",
+        "layout",
+        "gallery",
+        "fluid",
+        "grid",
+        "flexible"
+    ],
+    "licenses": [{
+        "type": "MIT",
+        "url": "http://www.opensource.org/licenses/mit-license.php"
+    }],
+    "ignore": [
+        "bower.json",
+        "demo.html",
+        "readme.md"
+    ]
+}

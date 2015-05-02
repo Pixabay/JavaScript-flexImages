@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Vanilla JavaScript flexImages Plugin</title>
+    <meta name="description" content="A lightweight vanilla JavaScript plugin for creating fluid galleries as seen on Flickr and Google Images.">
+    <link rel="shortcut icon" href="http://pixabay.com/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <style>
+        body { margin: 0; padding: 0; border: 0; min-width: 320px; color: #777; }
+        html, button, input, select, textarea, .pure-g [class *= "pure-u"] { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.02em; }
+        p, td { line-height: 1.5; }
+        ul { padding: 0 0 0 20px; }
+
+        th { background: #eee; white-space: nowrap; }
+        th, td { padding: 10px; text-align: left; vertical-align: top; font-size: .9em; font-weight: normal; border-right: 1px solid #fff; }
+        td:first-child { white-space: nowrap; color: #008000; width: 1%; font-style: italic; }
+
+        h1, h2, h3 { color: #4b4b4b; font-family: "Source Sans Pro", sans-serif; font-weight: 300; margin: 0 0 1.2em; }
+        h1 { font-size: 4.5em; color: #1f8dd6; margin: 0 0 .4em; }
+        h2 { font-size: 2em; color: #636363; }
+        h3 { font-size: 1.8em; color: #4b4b4b; margin: 1.8em 0 .8em }
+        h4 { font: bold 1em sans-serif; color: #636363; margin: 4em 0 1em; }
+        a { color: #4e99c7; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        p { margin: 0 0 1.2em; }
+        ::selection { color: #fff; background: #328efd; }
+        ::-moz-selection { color: #fff; background: #328efd; }
+
+        @media (max-width:480px) {
+            h1 { font-size: 3em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.5em; }
+            td:first-child { white-space: normal; }
+        }
+
+        .inline-code { padding: 1px 5px; background: #eee; border-radius: 2px; }
+        pre {
+            margin: 10px 0; overflow: auto; white-space: pre; word-wrap: normal;
+            border: 0 !important; padding: 8px 10px !important; line-height: 18px; background: #edf3f8;
+            font-family: Consolas, 'Liberation Mono', Courier, monospace; font-size: 14px;
+        }
+
+        /* Pure CSS */
+        .pure-button { margin: 5px 0; text-decoration: none !important; }
+        .button-lg { margin: 5px 0; padding: .65em 1.6em; font-size: 105%; }
+
+        /* demo4 */
+        #demo4 .item { margin: 0 1px 10px 1px; border: 0; }
+        #demo4 .item .img { position: absolute; left: 0; top: 0; right: 2px; bottom: 20px; }
+        #demo4 .bottom { position: absolute; left: 2px; bottom: 0; right: 2px; font-size: 13px; height: 18px; }
+
+        /* demo5 */
+        #demo5 .over { position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 6px; font-size: 13px; color: #fff; background: #222; background: rgba(0,0,0,.7); }
+
+        /* demo6 */
+        #demo6 a { display: block; position: absolute; top: 0; right: 0; bottom: -12px; left: 0; }
+    </style>
+    <link rel="stylesheet" href="flex-images.css">
+</head>
+<body>
+    <div style="max-width:900px;padding:0 10px;margin:40px auto;text-align:center">
+        <h1>flexImages</h1>
+        <h2>A lightweight vanilla JavaScript plugin for creating fluid galleries as seen on Flickr and Google Images.</h2>
+        <a href="https://github.com/Pixabay/JavaScript-flexImages/archive/master.zip" class="pure-button pure-button-primary button-lg">Download</a>
+        &nbsp;
+        <a href="https://github.com/Pixabay/JavaScript-flexImages" class="pure-button button-lg">View on GitHub</a>
+    </div>
+
+    <div style="max-width:900px;margin:auto;padding:0 10px">
+        <h3>Overview and Features</h3>
+        <p>
+            Released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
+            Source on <a href="https://github.com/Pixabay/JavaScript-flexImages">Github</a> (<a href="https://github.com/Pixabay/JavaScript-flexImages#changelog">changelog</a>).
+            Tested in Firefox, Safari, Chrome, Opera, Internet Explorer 8+. No dependencies, written in plain JavaScript.
+        </p>
+        <ul>
+            <li>Ridiculously tiny: 2.1 kB of JavaScript - less than 1.0 kB gzipped</li>
+            <li>Source images/objects can have any size</li>
+            <li>Works with more than just images, e.g. videos, iframes and plain text</li>
+            <li>Responsive</li>
+            <li>Equal margins between images controlled via CSS</li>
+            <li>No cropping or reordering</li>
+            <li>AJAX ready, e.g. for infinite scrolling</li>
+            <li>Support for lazy loading of images and iframe contents</li>
+            <li>Layout options to control e.g. the maximum number of rows - or whether or not to display an incomplete (last) row.</li>
+        </ul>
+        <p>
+            This plugin was developed by and for <a href="http://pixabay.com/">Pixabay.com</a> - an international repository for free Public Domain images.
+            We have <a href="http://pixabay.com/en/photos/?order=best">implemented this plugin in production</a> and we share this piece of software - in the spirit of Pixabay - freely with others.
+        </p>
+
+        <h3>Live Demo</h3>
+    </div>
+
+    <div style="max-width:908px;margin:auto;padding:0 10px 10px">
+        <div id="demo1" class="flex-images">
+            <div class="item" data-w="219" data-h="180"><img src="images/1.jpg"></div>
+            <div class="item" data-w="279" data-h="180"><img src="images/2.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="images/3.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="images/4.jpg"></div>
+            <div class="item" data-w="147" data-h="180"><img src="images/5.jpg"></div>
+            <div class="item" data-w="276" data-h="180"><img src="images/6.jpg"></div>
+            <div class="item" data-w="319" data-h="180"><img src="images/7.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="images/8.jpg"></div>
+            <div class="item" data-w="240" data-h="180"><img src="images/9.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="images/10.jpg"></div>
+            <div class="item" data-w="240" data-h="180"><img src="images/11.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="images/12.jpg"></div>
+            <div class="item" data-w="283" data-h="180"><img src="images/13.jpg"></div>
+            <div class="item" data-w="271" data-h="180"><img src="images/14.jpg"></div>
+            <div class="item" data-w="258" data-h="180"><img src="images/15.jpg"></div>
+        </div>
+    </div>
+
+    <div style="max-width:900px;margin:auto;padding:0 10px 50px">
+        <h3>Usage</h3>
+        <p>
+            Include the stylesheet <span class="inline-code">flex-images.css</span> in the <span class="inline-code">&lt;head&gt;</span> section of your HTML document - and the JavaScript file <span class="inline-code">flex-images.min.js</span> before the closing <span class="inline-code">&lt;/body&gt;</span> tag.
+            flexImages accepts settings from an object of key/value pairs.
+        </p>
+        <pre class="prettyprint"><code>new flexImages({ key1: value1, key2: value2 });</code></pre>
+        <p>
+            To <b>update</b> any settings or to <b>reload</b> modified content, simply re-initialize flexImages again on the appropriate container.
+            The plugin automatically prevents multiple bindings to one and the same element.
+            This may be used for content that gets modified later on via AJAX.
+        </p>
+
+        <h3>Settings</h3>
+        <table>
+            <tr><th>Property</th><th>Default</th><th>Description</th></tr>
+            <tr><td>selector</td><td>string or DOM element</td><td>Required selector for container or DOM element that holds the individual images/objects.</td></tr>
+            <tr><td>container</td><td>'.item'</td><td>Selector of the individual image/object containers.</td></tr>
+            <tr><td>object</td><td>'img'</td><td>Selector of the image/object inside a container.</td></tr>
+            <tr><td>rowHeight</td><td>180</td><td>Maximum height of a row.</td></tr>
+            <tr><td>maxRows</td><td><i>null</i></td><td>Maximum number of rows to display. Images/Objects exceeding this row are hidden.</td></tr>
+            <tr><td>truncate</td><td><i>false</i></td><td>Hide <i>incomplete</i> last row of images/objects.</td></tr>
+        </table>
+
+        <h3 style="margin-top:.8em;border-top:1px solid #eee;padding-top:1.8em">Example Code</h3>
+        <p><b>HTML Markup</b></p>
+
+        <pre class="prettyprint"><code>&lt;div class=&quot;flex-images&quot;&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;219&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/1.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;279&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/2.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;270&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/3.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;270&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/4.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;147&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/5.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;276&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/6.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;319&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/7.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;270&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/8.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;240&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/9.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;270&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/10.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;240&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/11.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;270&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/12.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;283&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/13.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;271&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/14.jpg&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-w=&quot;258&quot; data-h=&quot;180&quot;&gt;&lt;img src=&quot;images/15.jpg&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <p>
+            Each image must be wrapped inside a container element. The container must have a width (data-w) and height (data-h) attribute set that corresponds to the image's/object's original dimension.
+        </p>
+        <p><b>JavaScript code</b></p>
+
+        <pre class="prettyprint"><code>new flexImages({ selector: '.flex-images', rowHeight: 140 });</code></pre>
+
+        <p>
+            How it works: The plugin dynamically changes the width and height of all containers.
+            The images themselves have their height and width set to 100%.
+            Thus, each image takes up the full space inside its container.
+        </p>
+        <p>
+            This architecture enables a very flexible grid layout that works with more than just images.
+            E.g. objects may be placed on top of the images via absolute positioning. Or instead of images, the containers may be filled with videos or even plain text.
+        </p>
+
+        <h3>More Examples</h3>
+        <p>Please take a look at the source code of this page to see how these demos work.</p>
+
+        <p style="margin:0 0 8px">1. Fixed number of two complete rows with lazy loading of images; only images that are actually visible are retrieved from the server:</p>
+        <div id="demo2" class="flex-images">
+            <div class="item" data-w="219" data-h="180"><img src="blank.gif" data-src="images/1.jpg"></div>
+            <div class="item" data-w="279" data-h="180"><img src="blank.gif" data-src="images/2.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="blank.gif" data-src="images/3.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="blank.gif" data-src="images/4.jpg"></div>
+            <div class="item" data-w="147" data-h="180"><img src="blank.gif" data-src="images/5.jpg"></div>
+            <div class="item" data-w="276" data-h="180"><img src="blank.gif" data-src="images/6.jpg"></div>
+            <div class="item" data-w="319" data-h="180"><img src="blank.gif" data-src="images/7.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="blank.gif" data-src="images/8.jpg"></div>
+            <div class="item" data-w="240" data-h="180"><img src="blank.gif" data-src="images/9.jpg"></div>
+            <div class="item" data-w="270" data-h="180"><img src="blank.gif" data-src="images/10.jpg"></div>
+            <div class="item" data-w="240" data-h="180"><img src="blank.gif" data-src="images/11.jpg"></div>
+        </div>
+        <p style="margin:10px 0">
+            For lazy loading of images or iframes, it's required to use a &quot;blank.gif&quot; pixel as the source of all images. The actual source URL must be given in a data-src attribute of the image.
+            On init, the plugin will replace the dummy src attribute (blank.gif) with the actual source URL for all visible images.
+        </p>
+
+        <p style="margin:60px 0 8px">2. A fluid grid with video content and only full rows:</p>
+        <div id="demo3" class="flex-images">
+            <div class="item" data-w="280" data-h="157">
+                <iframe style="width:100%;height:100%;border:0" src="http://www.youtube.com/embed/JGCsyshUU-A?showinfo=0" allowfullscreen></iframe>
+            </div>
+            <div class="item" data-w="280" data-h="157">
+                <iframe style="width:100%;height:100%;border:0" src="http://www.youtube.com/embed/QeR47AQ05Jo?showinfo=0" allowfullscreen></iframe>
+            </div>
+            <div class="item" data-w="280" data-h="157">
+                <iframe style="width:100%;height:100%;border:0" src="http://www.youtube.com/embed/DlM2CWNTQ84?showinfo=0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <p style="margin:60px 0 8px">3. Showing a title underneath + less margin between images:</p>
+        <div id="demo4" class="flex-images">
+            <div class="item" data-w="219" data-h="197">
+                <div class="img"><img src="blank.gif" data-src="images/1.jpg"></div>
+                <div class="bottom">Caption 1</div>
+            </div>
+            <div class="item" data-w="279" data-h="197">
+                <div class="img"><img src="blank.gif" data-src="images/2.jpg"></div>
+                <div class="bottom">Caption 2</div>
+            </div>
+            <div class="item" data-w="270" data-h="197">
+                <div class="img"><img src="blank.gif" data-src="images/3.jpg"></div>
+                <div class="bottom">Caption 3</div>
+            </div>
+            <div class="item" data-w="270" data-h="197">
+                <div class="img"><img src="blank.gif" data-src="images/4.jpg"></div>
+                <div class="bottom">Caption 4</div>
+            </div>
+            <div class="item" data-w="147" data-h="197">
+                <div class="img"><img src="blank.gif" data-src="images/5.jpg"></div>
+                <div class="bottom">Caption 5</div>
+            </div>
+        </div>
+
+        <p style="margin:60px 0 8px">4. Overlaying caption - could be a link or a button, as well:</p>
+        <div id="demo5" class="flex-images">
+            <div class="item" data-w="219" data-h="180">
+                <img src="blank.gif" data-src="images/1.jpg">
+                <div class="over">Caption 1</div>
+            </div>
+            <div class="item" data-w="279" data-h="180">
+                <img src="blank.gif" data-src="images/2.jpg">
+                <div class="over">Caption 2</div>
+            </div>
+            <div class="item" data-w="270" data-h="180">
+                <img src="blank.gif" data-src="images/3.jpg">
+                <div class="over">Caption 3</div>
+            </div>
+            <div class="item" data-w="270" data-h="180">
+                <img src="blank.gif" data-src="images/4.jpg">
+                <div class="over">Caption 4</div>
+            </div>
+            <div class="item" data-w="147" data-h="180">
+                <img src="blank.gif" data-src="images/5.jpg">
+                <div class="over">Caption 5</div>
+            </div>
+        </div>
+
+        <p style="margin:60px 0 8px">5. Cut off parts of the images, e.g. a Shutterstock ID:</p>
+        <div id="demo6" class="flex-images">
+            <div class="item" data-w="450" data-h="300">
+                <a target="_blank" href="http://pixabay.com/go/?t=shutterstock&amp;id=115679980">
+                    <img src="http://thumb1.shutterstock.com/photos/display_pic_with_logo/619663/115679980.jpg">
+                </a>
+            </div>
+            <div class="item" data-w="450" data-h="437">
+                <a target="_blank" href="http://pixabay.com/go/?t=shutterstock&amp;id=128624426">
+                    <img src="http://thumb9.shutterstock.com/photos/display_pic_with_logo/588718/128624426.jpg">
+                </a>
+            </div>
+            <div class="item" data-w="450" data-h="300">
+                <a target="_blank" href="http://pixabay.com/go/?t=shutterstock&amp;id=140507401">
+                    <img src="http://thumb7.shutterstock.com/photos/display_pic_with_logo/1312372/140507401.jpg">
+                </a>
+            </div>
+            <div class="item" data-w="450" data-h="298">
+                <a target="_blank" href="http://pixabay.com/go/?t=shutterstock&amp;id=167693018">
+                    <img src="http://thumb1.shutterstock.com/photos/display_pic_with_logo/1014806/167693018.jpg">
+                </a>
+            </div>
+        </div>
+        <p style="margin:15px 0 5px">Original (uncut) first image with Shutterstock ID at the bottom:</p>
+        <div>
+            <img style="max-width:100%" src="http://thumb1.shutterstock.com/photos/display_pic_with_logo/619663/115679980.jpg">
+        </div>
+
+        <p style="margin-top:60px;border-top:1px solid #eee;padding-top:30px">
+            This plugin is used in production on <a href="http://pixabay.com/">Pixabay.com</a>,
+            where you can see flexImages at work in various locations and with all available options.
+            Please report any bugs and issues at the <a href="https://github.com/Pixabay/JavaScript-flexImages">GitHub repositiory</a>.
+        </p>
+
+        <div style="margin:40px 0;overflow:hidden">
+            <span id="github_social"></span>
+            <div style="float:left;margin-right:5px">
+                <a href="#" data-width="70" class="twitter-share-button" data-text="Vanilla JavaScript flexImages Plugin"></a>
+            </div>
+            <div style="float:left">
+                <div class="g-plusone" data-size="medium"></div>
+            </div>
+            <div style="float:left;width:140px" class="fb-like" data-send="false" data-layout="button_count" data-width="140" data-show-faces="false"></div>
+        </div>
+
+        <p>This software is released as Open Source under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a> by <a href="http://pixabay.com/users/Simon/">Simon Steinberger / Pixabay.com</a>.</p>
+    </div>
+
+    <div style="background:#fafafa;border-top:1px solid #eee;padding:15px;font-size:.9em">
+        <div style="max-width:900px;margin:auto;padding:0 10px">
+            <a style="float:right;margin-left:20px" href="http://pixabay.com/en/service/about/">About Us</a>
+            <a style="float:right;margin-left:20px" href="http://pixabay.com/en/blog/">Blog</a>
+            <a style="float:right;margin-left:20px" href="http://goodies.pixabay.com/">More Goodies</a>
+            © <a href="http://pixabay.com/">Pixabay.com</a> / Simon Steinberger / Hans Braxmeier
+        </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <script src="flex-images.js"></script>
+    <script>
+        new flexImages({selector: '#demo1', rowHeight: 140});
+        new flexImages({selector: '#demo2', rowHeight: 120, truncate: 1, maxRows: 2});
+        new flexImages({selector: '#demo3', object: 'iframe', rowHeight: 200, truncate: 1});
+        new flexImages({selector: '#demo4',  truncate: 1 });
+        new flexImages({selector: '#demo5',  truncate: 1 });
+        new flexImages({selector: '#demo6',  truncate: 1 });
+
+        if (~window.location.href.indexOf('http')) {
+            (function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
+            (function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=380275075435187&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+            document.getElementById('github_social').innerHTML = '\
+                <iframe style="float:left;margin-right:15px" src="//ghbtns.com/github-btn.html?user=Pixabay&repo=JavaScript-flexImages&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>\
+                <iframe style="float:left;margin-right:15px" src="//ghbtns.com/github-btn.html?user=Pixabay&repo=JavaScript-flexImages&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>\
+            ';
+        }
+    </script>
+    <script src="http://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" async defer></script>
+</body>
+</html>
