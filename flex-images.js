@@ -10,15 +10,8 @@ var flexImages = (function(){
     function flexImages(options){
         if (!document.querySelector) return;
 
-        function elWidth(el, outerw, innerw) {
-            var width = el.offsetWidth, style = window.getComputedStyle ? getComputedStyle(el, null) : el.currentStyle;
-            if (outerw) width += (parseInt(style.marginLeft) || 0) + (parseInt(style.marginRight) || 0);
-            else if (innerw) width -= (parseInt(style.borderLeftWidth) || 0) + (parseInt(style.borderRightWidth) || 0);
-            return width
-        }
-
         function makeGrid(grid, items, o, noresize){
-            var x, new_w, exact_w, ratio = 1, rows = 1, max_w = elWidth(grid, false, true), row = [], row_width = 0, h, row_h = o.rowHeight;
+            var x, new_w, exact_w, ratio = 1, rows = 1, max_w = grid.clientWidth, row = [], row_width = 0, h, row_h = o.rowHeight;
 
             // define inside makeGrid to access variables in scope
             function _helper(lastRow){
@@ -54,7 +47,7 @@ var flexImages = (function(){
             }
 
             // scroll bars added or removed during rendering new layout?
-            if (!noresize && max_w != elWidth(grid, false, true)) makeGrid(grid, items, o, true);
+            if (!noresize && max_w != grid.clientWidth) makeGrid(grid, items, o, true);
         }
 
         var o = { selector: 0, container: '.item', object: 'img', rowHeight: 180, maxRows: 0, truncate: 0 };
@@ -64,7 +57,8 @@ var flexImages = (function(){
         for (var i=0;i<grids.length;i++) {
             var grid = grids[i], containers = grid.querySelectorAll(o.container), items = [], t = new Date().getTime();
             if (!containers.length) continue;
-            o.margin = elWidth(containers[0], true) - elWidth(containers[0], false, true);
+            var s = window.getComputedStyle ? getComputedStyle(containers[0], null) : containers[0].currentStyle;;
+            o.margin = (parseInt(s.marginLeft) || 0) + (parseInt(s.marginRight) || 0) + (parseInt(s.borderLeftWidth) || 0) + (parseInt(s.borderRightWidth) || 0);
             for (var j=0;j<containers.length;j++) {
                 var c = containers[j],
                     w = parseInt(c.getAttribute('data-w')),
