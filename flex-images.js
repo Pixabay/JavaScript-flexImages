@@ -58,7 +58,7 @@ var flexImages = (function(){
         }
 
         var o = { selector: 0, container: '.item', object: 'img', rowHeight: 180, maxRows: 0, truncate: 0 };
-        for (var k in options) { if (Object.prototype.hasOwnProperty.call(options, k)) o[k]=options[k]; }
+        for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
         var grids = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);
 
         for (var i=0;i<grids.length;i++) {
