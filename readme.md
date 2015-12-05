@@ -27,6 +27,10 @@ https://goodies.pixabay.com/javascript/flex-images/demo.html
 
 ## Changelog
 
+### Version 1.0.2 - 2015/12/05
+
+* Fixed incorrect width in Chrome.
+
 ### Version 1.0.1 - 2015/10/30
 
 * Fixed error in calculation that caused the last image in each row to be cut off

@@ -1,7 +1,7 @@
 {
     "name": "javascript-flex-images",
 	"description": "A lightweight vanilla JavaScript plugin for creating fluid galleries as seen on Flickr and Google Images.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main" : [
     	"flex-images.min.js",
     	"flex-images.css"
