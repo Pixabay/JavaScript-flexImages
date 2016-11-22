@@ -55,6 +55,12 @@ var flexImages = (function(){
         for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
         var grids = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);
 
+        function _makeTempf(currentGrid, currentItems) {
+            var grid = currentGrid;
+            var items = currentItems;
+            this.eventHandler = function() { makeGrid(grid, items, o); }
+        }
+
         for (var i=0;i<grids.length;i++) {
             var grid = grids[i], containers = grid.querySelectorAll(o.container), items = [], t = new Date().getTime();
             if (!containers.length) continue;
@@ -68,7 +74,7 @@ var flexImages = (function(){
                 items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
             }
             makeGrid(grid, items, o);
-            var tempf = function() { makeGrid(grid, items, o); };
+            var tempf = new _makeTempf(grid, items).eventHandler;
             if (document.addEventListener) {
                 window['flexImages_listener'+t] = tempf;
                 window.removeEventListener('resize', window['flexImages_listener'+grid.getAttribute('data-flex-t')]);
