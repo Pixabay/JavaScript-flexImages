@@ -62,9 +62,11 @@ var flexImages = (function(){
             o.margin = (parseInt(s.marginLeft) || 0) + (parseInt(s.marginRight) || 0) + (Math.round(parseFloat(s.borderLeftWidth)) || 0) + (Math.round(parseFloat(s.borderRightWidth)) || 0);
             for (var j=0;j<containers.length;j++) {
                 var c = containers[j],
-                    w = parseInt(c.getAttribute('data-w')),
-                    norm_w = w*(o.rowHeight/parseInt(c.getAttribute('data-h'))), // normalized width
-                    obj = c.querySelector(o.object);
+                    w = parseInt(c.getAttribute('data-w')), 
+                    obj = c.querySelector(o.object),
+                    objWidth = obj.width,
+                    objHeight = obj.height,
+                    norm_w = objWidth*(o.rowHeight/objHeight);// normalized width
                 items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
             }
             makeGrid(grid, items, o);
