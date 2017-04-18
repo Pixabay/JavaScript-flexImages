@@ -3,7 +3,7 @@
     Copyright (c) 2014 Simon Steinberger / Pixabay
     GitHub: https://github.com/Pixabay/JavaScript-flexImages
     License: http://www.opensource.org/licenses/mit-license.php
-*/
+    */
 
 var flexImages = (function(){
     // "use strict";
@@ -29,7 +29,9 @@ var flexImages = (function(){
                 row_width += items[i][2] + o.margin;
                 if (row_width >= max_w) {
                     var margins_in_row = row.length * o.margin;
-                    ratio = (max_w-margins_in_row) / (row_width-margins_in_row), row_h = Math.ceil(o.rowHeight*ratio), exact_w = 0, new_w;
+                    var ratio = (max_w-margins_in_row) / (row_width-margins_in_row);
+                    var row_h = Math.ceil(o.rowHeight*ratio);
+                    var exact_w = 0, new_w;
                     for (x=0; x<row.length; x++) {
                         new_w = Math.ceil(row[x][2]*ratio);
                         exact_w += new_w + o.margin;
@@ -57,6 +59,9 @@ var flexImages = (function(){
 
         for (var i=0;i<grids.length;i++) {
             var grid = grids[i], containers = grid.querySelectorAll(o.container), items = [], t = new Date().getTime();
+            if (options['rowHeight'] == 'fluid'){
+                grid.clientWidth > 900 ? o['rowHeight'] = Math.floor(grid.clientWidth / 5) : o['rowHeight'] = 180;
+            }
             if (!containers.length) continue;
             var s = window.getComputedStyle ? getComputedStyle(containers[0], null) : containers[0].currentStyle;
             o.margin = (parseInt(s.marginLeft) || 0) + (parseInt(s.marginRight) || 0) + (Math.round(parseFloat(s.borderLeftWidth)) || 0) + (Math.round(parseFloat(s.borderRightWidth)) || 0);
@@ -92,3 +97,4 @@ var flexImages = (function(){
     else
         window.flexImages = flexImages;
 })();
+
